@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <%- include('partials/cdn-boostrap') %>
+  </head>
+  <body >
+    <%- include('partials/header') %> 
+
+
+    <% if(dataAlum.data != null) { %> 
+    
+    <div  class="container">
+      <div class="text-center">
+        <h3
+          class="list-group-item"
+          class="col-2"
+          id="ht-emi"          
+        >
+          CODIGO PAGO <%= codePago.codigo%>
+        </h3>
+        <br />
+      </div>
+      <span
+        class="list-group-item"
+        id="ht-sub1-emi"        
+        >CABECERA
+      </span>
+      <span class="list-group-item">
+        <b>Razon Social:</b> <%= dataAlum.data.razon_social%>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Nit:</b> <%=
+        dataAlum.data.nit%>
+      </span>
+      <span class="list-group-item"
+        ><b>Estudiante:</b> <%= dataAlum.data.estudiante%>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>CI:</b> <%=
+        dataAlum.data.ci_estudiante%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Email:</b> <%=
+        dataAlum.data.email%>
+      </span>
+      <span class="list-group-item"
+        ><b>Especialidad:</b> <%= dataAlum.data.especialidad%>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Curso:</b> <%=
+        dataAlum.data.curso%> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>Gestion:</b> <%= dataAlum.data.cod_gestion%>
+      </span>
+      <span class="list-group-item"
+        ><b>Sucursal:</b> <%= dataAlum.data.sucursal%>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <b>Tipo Cambio:</b> <%= dataAlum.data.tipo_cambio%>
+      </span>
+      <span
+        class="list-group-item"
+        id="ht-sub2-emi"        
+        >DETALLE DE CURSOS</span
+      >
+      <div class="table-det-emi">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Descripcion Pago</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Codigo Pago</th>
+              <th scope="col">Aplica Beca</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% dataAlum.data.detalle_de_pago.map((dp, i) => { %>
+            <tr>
+              <th scope="row"><%= i+1 %></th>
+              <td><%= dp[0].descripcion_pago %></td>
+              <td><%= dp[1].monto %></td>
+              <td><%= dp[3].codpag %></td>
+              <td><%= dp[8].aplibeca %></td>
+            </tr>
+
+            <% }) %>
+          </tbody>
+        </table>
+        <!-- <%= JSON.stringify(dataAlum.data.detalle_de_pago)%> -->
+      </div>
+    </div>
+    <% } else { %>
+    <div class="alert alert-danger" role="alert">
+      No se tiene registro de pago para el codigo: <%= codePago.codigo%>
+    </div>
+
+    <% } %>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <%- include('partials/cdn-boostrap') %>
+</head>
+<body >
+    <%- include('partials/header') %> 
+    <div class="container">
+        <div class="alert alert-info" role="alert" id="alert-emi">
+            <h5 class="text-center">INGRESE LOS DATOS PARA OPTENER LAS FACTURAS DEL ALUMNO</h5>
+          <br>
+          <form action="" method="post" class="needs-validation" novalidate>
+            <div class="form-inline">
+              <div class="form-group mx-sm-3 mb-2">
+                <label for="date-input" class="col-2 col-form-label">CI</label>
+                <input type="text" name="ci_estudiante" class="form-control" placeholder="Carnet Alumno" required>
+              </div>
+              <div class="form-group mx-sm-3 mb-2">
+                <label for="date-input" class="col-2 col-form-label">Desde</label>
+                <input type="date" name="fecha_ini" class="form-control">
+              </div>
+              <div class="form-group mx-sm-3 mb-2">                
+                <label for="date-input" class="col-2 col-form-label">Hasta</label>
+                <input class="form-control" name="fecha_fin" type="date">
+              </div>
+              <input type="submit" value="Consultar" class="btn" id="btn-submit-emi">            
+          </form>      
+        </div>
+    </div>
+    
+        <% if(dataFacAlum.resp) {%>          
+               
+          <div class="alert alert-success" role="alert" id="alumno-title"><%= dataFacAlum.factura[0].nombre_factura %></div>   
+                <table class="table table-bordered">                  
+                  <thead id="head-emi">
+                    <tr>
+                      <th scope="col">#</th>                      
+                      <th scope="col">Nit</th>
+                      <th scope="col">N° Factura</th>                      
+                      <th scope="col">Sucursal</th>                      
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Accion</th>
+                    </tr>
+                  </thead>
+                  <tbody id="body-emi" >
+                    <% dataFacAlum.factura.map((e, i) => { %>
+                    <tr>
+                      <th scope="row"><%= i+1 %></th>                      
+                      <td><%= e.nit %></td>
+                      <td><%= e.nro_factura %></td>
+                      <td><%= e.nombre %></td>
+                      <td><%= e.fecha %></td>
+                      <td>
+                        
+              
+                    <a href="/download/<%=e.id_proceso_wf%>" target="_blank"
+                      id ="getd" title="Re-impresion"  class="btn btn-outline-success" >
+                      
+                      <i class="fa fa-file-pdf" aria-hidden="true"></i></a>
+              
+              
+                        <button type="button" class="btn btn-outline-danger"  
+                        id="<%=e.id_venta%>" title="Anulacion"   
+                        data-toggle="modal" data-target="#exampleModal"                   
+                        onclick="onAgreeData(this)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>                          
+                      </td>
+                    </tr>
+        
+                    <% }) %>
+                  </tbody>
+                </table>                                      
+        <% } else if(dataFacAlum.msg != undefined) {%>
+            <div class="alert alert-warning" role="alert">
+                <h1><%= dataFacAlum.msg %></h1>
+              </div>
+            
+        <% } %>
+
+        
+    </div>    
+
+    <!-- Modal Formulario registro factura -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-info text-white">
+            <h5 class="modal-title" id="exampleModalLabel">REGISTRE LOS DATOS PARA LA ANULACION</h5>
+          </div>
+          <div class="modal-body">
+            
+              <div class="card card-body" id="pro-div-emi">
+                <form  action="/processing" method="post">
+                  <div class="form-inline">                  
+                  <input
+                    type="text"
+                    class="form-control mb-2 mr-sm-2"                
+                    name="razon_social"
+                    placeholder="Razon Social"  
+                    id="razon_mod"
+                    onkeypress="onValidate(this, 'text')"
+                  />
+                  <div class="input-group mb-2 mr-sm-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="nit"
+                      placeholder="Nit"
+                      id="nit_mod"
+                      onkeypress="onValidate(this,'numeric')"
+                    />
+                  </div>                  
+                  <div class="input-group mb-2 mr-sm-2">
+                    <input
+                      type="email"
+                      class="form-control"
+                      name="email"
+                      aria-describedby="emailHelp"
+                      placeholder="Enter email"
+                      id="mail_mod"
+                      onkeypress="onValidate(this,'mail')"
+                    />
+                  </div>
+                  <div class="input-group mb-2 mr-sm-2">
+                    <input
+                      type="number"
+                      id="process_data_id"                      
+                      class="form-control"                                            
+                    />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="submit" class="btn mb-2" id="pro-btn-emi">Procesar</button>
+                </div>
+                </form>                
+              </div>            
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
+<div class="col-10">
+  
+</div>
